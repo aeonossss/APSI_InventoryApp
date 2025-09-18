@@ -1,0 +1,3 @@
+react-scripts
+lucide-react
+react-router-dom

@@ -7,10 +7,13 @@ function LandingPage() {
     return (
         <div className='body'>
             <div className='bg-image'>
-                <h1>Landing Page</h1>
-                <button onClick={() => nav('/loginpage')}>
-                    Login Page
-                </button>
+                <div className='container'>
+                    <h1 className='title'>ShowCase Inventory<br></br> Management</h1>
+                    <p><i>Manage your inventory, staff, and transactions, all in one click.</i></p>
+                    <button className='pink-buttons' onClick={() => nav('/loginpage')}>
+                        Get Started
+                    </button>                      
+                </div>            
             </div>
         </div>
     );

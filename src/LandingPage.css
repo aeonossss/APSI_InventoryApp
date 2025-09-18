@@ -1,0 +1,47 @@
+.bg-image {
+    position: fixed;
+}
+
+.title{
+    font-size: 50px;
+    margin-bottom: 20px;
+    color: #3B1B47;
+    line-height: -20vh;
+}
+
+.container {
+    margin-bottom: 40px;
+    text-align: center;
+    position: relative;
+    flex-direction: column;
+    top: 15%;
+    left: 15%;
+    height: 65vh;
+    width: 70vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 5, 32, 25%);
+}
+
+.pink-buttons {
+    width: 200px;
+    background-color: #FF8282;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 13px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    font-weight: bolder;
+}
+.pink-buttons:hover {
+    background-color: #d8518a;
+}
+.p{
+    font-size: 20px;
+    color: #3B1B47;
+}

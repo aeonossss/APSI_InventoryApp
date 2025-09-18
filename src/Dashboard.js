@@ -1,8 +1,10 @@
 import { useState } from 'react';
 import './Dashboard.css';
+import { useNavigate } from 'react-router-dom';
 import { BarChart3, ShoppingCart, Package, Users, LogOut, User } from 'lucide-react';
 
 const Dashboard = () => {
+  const nav = useNavigate();
   const [activeTab, setActiveTab] = useState('Warehouse');
   
   const sidebarItems = [
@@ -67,7 +69,7 @@ const Dashboard = () => {
 
           {/* Logout */}
           <div className="logout">
-            <button>
+            <button onClick={() => nav('/loginpage')}>
               <LogOut size={18} />
               <span>Log out</span>
             </button>

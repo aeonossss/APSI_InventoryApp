@@ -1,26 +1,27 @@
 import './LoginPage.css'
 import './Dashboard.js'
-import './SignupPage.js'
 import { User, Mail, Lock, ShieldUser } from 'lucide-react';
 import { Link, useNavigate } from'react-router-dom';
 
-function LoginPage(){
+function SignupPage(){
     return(
         <div className='login-page'>
             <div className='bg-image'>
                 <h1 className='title'>
-                        Welcome back!
+                        Get started!
                     </h1>
-                <div className='container-login'>
+                <div className='container-signup'>
                     <div className='overlay-gradient'>
+                    <Textbox placeholder='Full Name' icon={User} />
+                    <Textbox placeholder='Role' icon={ShieldUser} />
                     <Textbox placeholder='Email' icon={Mail} />
                     <Textbox placeholder='Password' icon={Lock}/>
                     <p className='centered-text'>
-                        <i>Not a member yet?</i> <Link to="/signuppage"><b>Sign Up</b></Link>
+                        <i>Already a member?</i> <Link to="/loginpage"><b>Login</b></Link>
                     </p>
                     <br></br>
                     <br></br>
-                    <Button label='Login'/>
+                    <Button label='Sign Up'/>
                     <div/>
                 </div>
                 </div>
@@ -53,4 +54,4 @@ function Textbox({placeholder, icon: Icon}){
     );
 }
 
-export default LoginPage;
+export default SignupPage;

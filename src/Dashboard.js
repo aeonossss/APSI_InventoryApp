@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import './Dashboard.css';
-import './Orders.js';
-import './FixedHeaderSidebar.css';
+import './App'
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BarChart3, ShoppingCart, Package, Users, LogOut, User } from 'lucide-react';
@@ -14,7 +13,7 @@ const Dashboard = () => {
   const sidebarItems = [
     { name: 'Dashboard', icon: BarChart3, path: '/dashboard' },
     { name: 'Order', icon: ShoppingCart, path: '/orders' },
-    { name: 'Items', icon: Package },
+    { name: 'Items', icon: Package, path: '/items' },
     { name: 'Customer', icon: Users },
   ];
 
@@ -35,7 +34,7 @@ const Dashboard = () => {
   ];
 
   return (
-    <div className="dashboard">
+    <div className="background">
       <div className="dashboard-header">
         <h1>Overview</h1>
         <div className="user-info">

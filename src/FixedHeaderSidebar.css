@@ -1,4 +1,3 @@
-/* DASHBOARD HEADER */
 .dashboard-header,
 .dashboard-header-orders {
   height: 82.5px;
@@ -21,9 +20,8 @@
   color: rgba(255, 255, 255, 0.8);
 }
 
-/* USER INFO (inside header) */
 .user-info {
-  margin-right: 4rem;
+  margin-right: 1rem;
   display: flex;
   align-items: center;
   gap: 0.75rem;
@@ -47,13 +45,13 @@
   display: flex;
   flex-direction: column;
   font-size: 0.875rem;
-  color: white;
+  color: rgb(255, 255, 255);
   text-align: right;
 }
 
 .user-details .name {
   font-weight: 500;
-  color: #3B1B47;
+  color: #ffffff;
   margin: 0;
 }
 
@@ -156,11 +154,12 @@
 }
 
 .logout button {
+  border-radius: 5rem;;
   display: flex;
   align-items: center;
   gap: 0.75rem;
   padding: 0.625rem 1rem;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(249, 249, 249, 0.8);
   border: none;
   background: none;
   cursor: pointer;

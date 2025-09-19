@@ -1,3 +1,4 @@
 react-scripts
 lucide-react
 react-router-dom
+framer-motion /*scrapped*/

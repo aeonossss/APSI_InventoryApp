@@ -1,13 +1,18 @@
 import { BarChart3, ShoppingCart, Package, Users, LogOut, User } from 'lucide-react';
-import './FixedHeaderSidebar.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useState } from 'react';
-import 'App.js';
+import './App.js';
+import FixedHeaderSidebar from './FixedHeaderSidebar.js';
 
 function Items() {
     return(
         <div className="Items-container">
-            <h1>Items Page</h1>
+            <FixedHeaderSidebar />
+            <div className="background">
+                <div className="main">
+                    
+                </div>
+            </div>
         </div>
     )
 }

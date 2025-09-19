@@ -1,25 +1,20 @@
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import './FixedHeaderSidebar.css';
 import { useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import { ShoppingCart, Package, Users, LogOut, ChevronLeft, ChevronRight, BarChart3, User } from 'lucide-react';
+import './FixedHeaderSidebar.js';
 import './Orders.css';
+import FixedHeaderSidebar from './FixedHeaderSidebar.js';
 
 const Orders = () => {
-  const nav = useNavigate();
-  const location = useLocation();
   const [activeTab, setActiveTab] = useState('All Orders');
-
-  const sidebarItems = [
-    { name: 'Dashboard', icon: BarChart3, path: '/dashboard' },
-    { name: 'Order', icon: ShoppingCart, path: '/orders' },
-    { name: 'Items', icon: Package, path: '/items' },
-    { name: 'Customer', icon: Users, path: '/customer' },
-  ];
 
   const orders = [
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PAID' },
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PENDING' },
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PAID' },
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PENDING' },
+    { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PAID' },
+    { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PENDING' }
   ];
 
   const top_tabs = ['All Orders', 'Pending', 'To Ship', 'Completed'];
@@ -32,45 +27,8 @@ const Orders = () => {
 
   return (
     <div className="Orders-container">
-      <div className="sidebar">
-        <div className="dashboard-header-orders">
-        <h1>Overview</h1>
-        <div className="user-info">
-          <div className="user-avatar">
-            <User size={16} className="sidebar-text" />
-          </div>
-          <div className="user-details">
-            <div className="name">Juan Dela Cruz</div>
-            <div className="id">#03829</div>
-          </div>
-        </div>
-      </div>
+      <FixedHeaderSidebar />
 
-        <nav>
-          {sidebarItems.map((item) => {
-            const Icon = item.icon;
-            const isActive = location.pathname === item.path;
-            return (
-              <button
-                key={item.name}
-                className={isActive ? 'active' : ''}
-                onClick={() => nav(item.path)}
-              >
-                <Icon size={16} />
-                <span>{item.name}</span>
-              </button>
-            );
-          })}
-        </nav>
-        <div>
-          <button onClick={() => nav('/loginpage')}>
-            <LogOut size={16} />
-            <span>Log out</span>
-          </button>
-        </div>
-      </div>
-
-      {/* Main content */}
       <div className="main-content">
         <div className="header">
           <div className="top_tabs">

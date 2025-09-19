@@ -28,7 +28,7 @@
 }
 
 .tab {
-  margin-top: 5rem;
+  margin-top: 4rem;
   font-size: 1.125rem;
   font-weight: bold;
   color: #4a003586;
@@ -76,7 +76,6 @@
   border-radius: 1rem;
   overflow: hidden;
   box-shadow: 0 8px 20px rgba(128, 13, 86, 0.159);
-  transition: all 0.2s ease-in-out;
 }
 
 .table-header {

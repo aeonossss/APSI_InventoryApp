@@ -13,8 +13,6 @@ const Orders = () => {
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PENDING' },
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PAID' },
     { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PENDING' },
-    { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PAID' },
-    { itemId: '#01234', date: '12 Sept, 2025', orderId: '#01234', customer: 'AWM Inc', total: '$23,356.25', status: 'PENDING' }
   ];
 
   const top_tabs = ['All Orders', 'Pending', 'To Ship', 'Completed'];

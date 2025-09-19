@@ -28,7 +28,7 @@ const Dashboard = () => {
 
   const products = [
     { name: 'Sodapop Candy Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'OUT OF STOCK' },
-    { name: 'Amber Vein Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'IN STOCK' },
+    { name: 'Amber Vein Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'OUT OF STOCK' },
     { name: 'Cursed Feather Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'IN STOCK' },
     { name: 'Twinborn Sky White Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'IN STOCK' },
   ];
@@ -131,7 +131,7 @@ const Dashboard = () => {
                 </table>
               </div>
               <div className="view-all">
-                <button>View all..</button>
+                <button onClick={() => nav('/items')}>View all..</button>
               </div>
             </div>
           </div>

@@ -133,8 +133,8 @@ tbody tr:hover {
 }
 
 .view-all button {
-  color: #9333ea;
-  font-weight: 500;
+  color: #AE6499;
+  font-weight: bold;
   transition: color 0.2s ease;
   border: none;
   background: none;
@@ -142,5 +142,5 @@ tbody tr:hover {
 }
 
 .view-all button:hover {
-  color: #6b21a8;
+  color: #5B1F45;
 }

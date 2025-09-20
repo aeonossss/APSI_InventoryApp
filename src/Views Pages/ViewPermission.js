@@ -1,48 +1,65 @@
 import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { supabase } from '../Supabase/supabaseClient.js'
 import './StaffView.css';
 
 function ViewPermission() {
-  const nav = useNavigate();
+  const navigate = useNavigate();
   const location = useLocation();
 
-  //edit role here:
-  const userRole = 'accounting';
-  const top_tab_staffs = ['Team Lead', 'CSR', 'Warehouse', 'Accounting'];
+  const [userRole, setUserRole] = useState(null);
+  const [loading, setLoading] = useState(true);
 
-  //map tab names to routes
-  const roleRoutes = {
-    'Team Lead': '/TeamLeadView',
-    'CSR': '/CSRView',
-    'Warehouse': '/WarehouseView',
-    'Accounting': '/AccountingView'
-  };
+  // Define tabs and their corresponding roles and routes
+  const staffTabs = [
+    {name: 'Team lead', role: 'team_lead', route: '/TeamLeadView'},
+    {name: 'CSR', role:'csr', route:'/CSRView'},
+    {name: 'Warehouse', role: 'warehouse', route: '/WarehouseView'},
+    {name: 'Accounting', role: 'accounting', route: '/AccountingView'},
+  ];
 
-  const perms = (userRole, permittedRole, targetPath) => {
-    if (userRole === permittedRole) {
-      nav(targetPath);
+  useEffect(() => {
+    async function getSession(){
+      const { data: {user}} = await supabase.auth.getUser();
+
+      if(user) {
+        // Where does the role stored??
+        setUserRole(user.app_metadata.role);
+      }
+      setLoading(false);
+    }
+    getSession();
+  }, []);
+
+  const handleNavigation = (targetRoute, requiredRole) => {
+    if (userRole === requiredRole){
+      navigate(targetRoute);
     } else {
       alert("You don't have permission to access this page.");
     }
   };
+  if (loading){
+    // IDK what to put here if i'm being honest
+    return <div>Loading...</div>
+  }
 
-  const permsRead = (role, tabName) => {
-    const targetPath = roleRoutes[tabName];
-    perms(userRole, role, targetPath);
-  };
+  // If no user is logged in, we should redirect them somewhere
+  if (!userRole) {
+    return <div>Please log in to view this content.</div>
+  }
 
   return (
     <div className='view-permission'>
       <div className='top_tab_staffs'>
-        {top_tab_staffs.map((tab) => {
-          const roleKey = tab.toLowerCase().replace(' ', '-');
-          const isActive = location.pathname === roleRoutes[tab];
+        {staffTabs.map((tab) => {
+          const isActive = location.pathname === tab.route;
 
           return (
             <button
-              key={tab}
-              onClick={() => permsRead(roleKey, tab)}
+              key={tab.name}
+              onClick={() => handleNavigation(tab.route, tab.role)}
               className={isActive ? 'tab active' : 'tab'}>
-              {tab}
+              {tab.name}
             </button>
           );
         })}

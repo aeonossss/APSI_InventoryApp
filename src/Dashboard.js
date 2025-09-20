@@ -1,31 +1,68 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Dashboard.css';
-import './App'
-
-import { useNavigate} from 'react-router-dom';
+import './App';
+import { useNavigate } from 'react-router-dom';
 import { User } from 'lucide-react';
 import FixedHeaderSidebar from './FixedHeaderSidebar';
+import { supabase } from './supabaseClient';
 
 const Dashboard = () => {
   const nav = useNavigate();
   const [activeTab, setActiveTab] = useState('Warehouse');
-  
 
-  const statsCards = [
-    { number: '56,328', label: 'Orders' },
-    { number: '984', label: 'Products' },
-    { number: '$102,408', label: 'Sales' },
-    { number: '3,747', label: 'Customers' },
-  ];
+  // State for tables
+  const [warehouse, setWarehouse] = useState([]);
+  const [staff, setStaff] = useState([]);
+  const [orders, setOrders] = useState([]);
+
+  // Load data on tab switch
+  useEffect(() => {
+    if (activeTab === 'Warehouse') fetchWarehouse();
+    if (activeTab === 'Staff') fetchStaff();
+    if (activeTab === 'Orders') fetchOrders();
+  }, [activeTab]);
+
+  // --- FETCH FUNCTIONS ---
+  const fetchWarehouse = async () => {
+    let { data, error } = await supabase.from('Warehouse').select('*');
+    if (error) console.error(error);
+    else setWarehouse(data);
+  };
+
+  const fetchStaff = async () => {
+    let { data, error } = await supabase.from('Staff').select('*');
+    if (error) console.error(error);
+    else setStaff(data);
+  };
+
+  const fetchOrders = async () => {
+    let { data, error } = await supabase.from('Order').select('*');
+    if (error) console.error(error);
+    else setOrders(data);
+  };
+
+  // --- CRUD EXAMPLES ---
+  const addWarehouse = async () => {
+    const { error } = await supabase.from('Warehouse').insert([
+      { item_id: 1, transaction_date: new Date(), transaction_type: true, quantity: 50 }
+    ]);
+    if (error) console.error(error);
+    fetchWarehouse();
+  };
+
+  const deleteStaff = async (id) => {
+    const { error } = await supabase.from('Staff').delete().eq('staff_id', id);
+    if (error) console.error(error);
+    fetchStaff();
+  };
+
+  const updateOrder = async (id, newAmount) => {
+    const { error } = await supabase.from('Order').update({ amount: newAmount }).eq('order_id', id);
+    if (error) console.error(error);
+    fetchOrders();
+  };
 
   const tabs = ['Warehouse', 'Staff', 'Orders'];
-
-  const products = [
-    { name: 'Sodapop Candy Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'OUT OF STOCK' },
-    { name: 'Amber Vein Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'OUT OF STOCK' },
-    { name: 'Cursed Feather Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'IN STOCK' },
-    { name: 'Twinborn Sky White Case', id: '#01234', price: '$79.25', sales: '$23,356.25', status: 'IN STOCK' },
-  ];
 
   return (
     <div className="background">
@@ -42,18 +79,8 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex">
-          <FixedHeaderSidebar />
-
+        <FixedHeaderSidebar />
         <div className="main">
-
-          <div className="stats">
-            {statsCards.map((stat, index) => (
-              <div key={index} className="stat-card">
-                <div className="number">{stat.number}</div>
-                <div className="label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
           <div className="tabs">
             <div className="tab-headers">
               {tabs.map((tab) => (
@@ -66,42 +93,90 @@ const Dashboard = () => {
                 </button>
               ))}
             </div>
+
             <div className="table-container">
-              <div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Product Name</th>
-                      <th>Product ID</th>
-                      <th>Price</th>
-                      <th>Sales</th>
-                      <th>Status</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {products.map((product, index) => (
-                      <tr key={index}>
-                        <td>{product.name}</td>
-                        <td>{product.id}</td>
-                        <td>{product.price}</td>
-                        <td>{product.sales}</td>
-                        <td>
-                          <span
-                            className={`status ${
-                              product.status === 'IN STOCK' ? 'in-stock' : 'out-stock'
-                            }`}
-                          >
-                            {product.status}
-                          </span>
-                        </td>
+              {activeTab === 'Warehouse' && (
+                <>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Item</th>
+                        <th>Date</th>
+                        <th>Type</th>
+                        <th>Qty</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <div className="view-all">
-                <button onClick={() => nav('/items')}>View all..</button>
-              </div>
+                    </thead>
+                    <tbody>
+                      {warehouse.map((w) => (
+                        <tr key={w.transaction_id}>
+                          <td>{w.transaction_id}</td>
+                          <td>{w.item_id}</td>
+                          <td>{w.transaction_date}</td>
+                          <td>{w.transaction_type ? 'IN' : 'OUT'}</td>
+                          <td>{w.quantity}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}
+
+              {activeTab === 'Staff' && (
+                <>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Role</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {staff.map((s) => (
+                        <tr key={s.staff_id}>
+                          <td>{s.staff_id}</td>
+                          <td>{s.staff_name}</td>
+                          <td>{s.role}</td>
+                          <td>
+                            <button onClick={() => deleteStaff(s.staff_id)}>Delete</button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}
+
+              {activeTab === 'Orders' && (
+                <>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Amount</th>
+                        <th>Update</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {orders.map((o) => (
+                        <tr key={o.order_id}>
+                          <td>{o.order_id}</td>
+                          <td>{o.customer_name}</td>
+                          <td>{o.amount}</td>
+                          <td>
+                            <button onClick={() => updateOrder(o.order_id, o.amount + 100)}>
+                              +100
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </>
+              )}
             </div>
           </div>
         </div>

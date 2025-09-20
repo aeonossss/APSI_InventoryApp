@@ -4,7 +4,7 @@ import './SignupPage.js'
 import { User, Mail, Lock, ShieldUser, AlertCircle, Eye, EyeOff } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { supabase } from './Supabase/supabaseClient';
+import { supabase } from './supabaseClient.js';
 import { validateEmail, validateLoginForm } from './Components/validation.js';
 
 function LoginPage() {

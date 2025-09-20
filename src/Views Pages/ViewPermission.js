@@ -1,6 +1,6 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { supabase } from '../Supabase/supabaseClient.js'
+import { supabase } from '../supabaseClient.js'
 import './StaffView.css';
 
 function ViewPermission() {

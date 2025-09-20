@@ -3,7 +3,7 @@ import './Dashboard.js'
 import { User, Mail, Lock, ShieldUser, ChevronDown, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { supabase } from './Supabase/supabaseClient';
+import { supabase } from './supabaseClient.js';
 import { validateSignupForm } from './Components/validation.js';
 
 function SignupPage() {

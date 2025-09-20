@@ -4,18 +4,13 @@ import './App'
 
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BarChart3, ShoppingCart, Package, Users, LogOut, User } from 'lucide-react';
+import FixedHeaderSidebar from './FixedHeaderSidebar';
 
 const Dashboard = () => {
   const nav = useNavigate();
   const location = useLocation();
   const [activeTab, setActiveTab] = useState('Warehouse');
   
-  const sidebarItems = [
-    { name: 'Dashboard', icon: BarChart3, path: '/dashboard' },
-    { name: 'Order', icon: ShoppingCart, path: '/orders' },
-    { name: 'Items', icon: Package, path: '/items' },
-    { name: 'Customer', icon: Users },
-  ];
 
   const statsCards = [
     { number: '56,328', label: 'Orders' },
@@ -48,32 +43,7 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="flex">
-        <div className="sidebar">
-          <nav>
-            {sidebarItems.map((item) => {
-              const Icon = item.icon;
-              const isActive = location.pathname === item.path;
-              return (
-                <button
-                  key={item.name}
-                  className={isActive ? 'active' : ''}
-                  onClick={() => {
-                    nav(item.path)
-                  }}>
-                  <Icon size={18} />
-                  <span>{item.name}</span>
-                </button>
-              );
-            })}
-          </nav>
-
-          <div className="logout">
-            <button onClick={() => nav('/loginpage')}>
-              <LogOut size={18} />
-              <span>Log out</span>
-            </button>
-          </div>
-        </div>
+          <FixedHeaderSidebar />
 
         <div className="main">
 

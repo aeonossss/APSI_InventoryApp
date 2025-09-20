@@ -10,7 +10,7 @@ function FixedHeaderSidebar() {
     { name: 'Dashboard', icon: BarChart3, path: '/dashboard' },
     { name: 'Order', icon: ShoppingCart, path: '/orders' },
     { name: 'Items', icon: Package, path: '/items' },
-    { name: 'Customer', icon: Users, path: '/customer' },
+    { name: 'Staff View', icon: Users, path: '/staffview' },
   ];
     return(
         <div className="sidebar">

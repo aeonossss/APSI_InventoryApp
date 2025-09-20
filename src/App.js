@@ -10,6 +10,7 @@ import TeamLeadView from './Views Pages/TeamLeadView.js';
 import CSRView from './Views Pages/CSRView.js';
 import WarehouseView from './Views Pages/WarehouseView.js';
 import AccountingView from './Views Pages/AccountingView.js';
+import Procurement from './Procurement.js';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/csrview' element={<CSRView />} />
         <Route path='/warehouseview' element={<WarehouseView />} />
         <Route path='/accountingview' element={<AccountingView />} />
+        <Route path='/procurement' element={<Procurement />} />
       </Routes>
     </BrowserRouter>
   );

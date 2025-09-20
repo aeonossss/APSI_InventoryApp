@@ -1,9 +1,17 @@
 import './LoginPage.css';
+import './Dashboard.js';
 import { User, Mail, Lock, ShieldUser, ChevronDown, AlertCircle } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { supabase } from './supabaseClient.js';
 import { validateSignupForm } from './Components/validation.js';
+
+const ROLE_OPTIONS = [
+  { label: 'CSR', value: 'csr' },
+  { label: 'Team Lead', value: 'team-lead' },
+  { label: 'Accounting', value: 'accounting' },
+  { label: 'Warehouse Staff', value: 'warehouse' },
+];
 
 function SignupPage() {
   const [fullName, setFullName] = useState('');
@@ -36,25 +44,38 @@ function SignupPage() {
     setIsLoading(true);
 
     try {
+      // ✅ Sign up user with role and full_name metadata
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
-          data: { full_name: fullName, role } // trigger uses this
+          data: {
+            full_name: fullName,
+            role: role || 'csr', // fallback role
+          },
+          emailRedirectTo: window.location.origin,
         },
       });
 
       if (error) {
-        console.error('Error signing up:', error.message);
         setErrors({ submit: error.message });
         return;
       }
 
-      console.log('User signed up:', data.user);
-      navigate('/dashboard');
+      // ✅ Immediately log in after signup
+      const { error: loginError } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
 
-    } catch (error) {
-      console.error('Unexpected error:', error);
+      if (loginError) {
+        setErrors({ submit: loginError.message });
+        return;
+      }
+
+      navigate('/dashboard');
+    } catch (err) {
+      console.error('Unexpected error:', err);
       setErrors({ submit: 'An unexpected error occurred. Please try again.' });
     } finally {
       setIsLoading(false);
@@ -69,8 +90,11 @@ function SignupPage() {
           <div className='overlay-gradient'>
             <form onSubmit={handleSignup}>
               <Textbox placeholder='Full Name' icon={User} value={fullName} onChange={e => setFullName(e.target.value)} error={errors.fullName} />
-              <DropdownButton icon={ShieldUser} selectedOption={role} onSelectOption={setRole} error={errors.role} roles={roles} />
+
+              <DropdownButton icon={ShieldUser} selectedOption={role} onSelectOption={setRole} error={errors.role} options={ROLE_OPTIONS} />
+
               <Textbox placeholder='Email' icon={Mail} value={email} onChange={e => setEmail(e.target.value)} error={errors.email} type="email" />
+
               <Password placeholder='Password' icon={Lock} value={password} onChange={e => setPassword(e.target.value)} error={errors.password} />
 
               {errors.submit && (
@@ -95,7 +119,11 @@ function SignupPage() {
 
 // 🔘 Components
 function Button({ label, type = "button", disabled = false, onClick }) {
-  return <button className={`pink-buttons-long ${disabled ? 'disabled' : ''}`} type={type} disabled={disabled} onClick={onClick}>{label}</button>;
+  return (
+    <button className={`pink-buttons-long ${disabled ? 'disabled' : ''}`} type={type} disabled={disabled} onClick={onClick}>
+      {label}
+    </button>
+  );
 }
 
 function Textbox({ placeholder, icon: Icon, value, onChange, error, type = "text" }) {
@@ -122,9 +150,9 @@ function Password({ placeholder, icon: Icon, value, onChange, error }) {
   );
 }
 
-const DropdownButton = ({ icon: Icon, selectedOption, onSelectOption, error, roles }) => {
+// 🔘 DropdownButton component
+const DropdownButton = ({ icon: Icon, selectedOption, onSelectOption, error, options }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const options = roles || [];
 
   const handleOptionClick = (option) => {
     onSelectOption(option.value);
@@ -141,9 +169,9 @@ const DropdownButton = ({ icon: Icon, selectedOption, onSelectOption, error, rol
         </button>
         {isOpen && (
           <div className="dropdown-menu">
-            {options.map(opt => (
-              <button key={opt.value} type="button" className="dropdown-item" onClick={() => handleOptionClick(opt)}>
-                {opt.label}
+            {options.map(option => (
+              <button key={option.value} type="button" className="dropdown-item" onClick={() => handleOptionClick(option)}>
+                {option.label}
               </button>
             ))}
           </div>

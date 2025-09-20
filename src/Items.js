@@ -2,9 +2,18 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import './App.js';
 import './Items.css';
 import FixedHeaderSidebar from './FixedHeaderSidebar.js';
+import { useNavigate } from 'react-router-dom';
 
 function Items() {
-    
+  const ProcurementButton = () => {
+    const nav = useNavigate();
+    return (
+        <div className='procurement-page' onClick={() => nav('/procurement')}>
+            Button
+        </div>
+    )
+}
+    const nav = useNavigate();
     const products = [
         {productName: 'Sodapop Candy Case', productID: '#01234', price: '$79.25', sales: '$23,356.25', stock: 'OUT OF STOCK'},
         {productName: 'Amber Vein Case', productID: '#01234', price: '$79.25', sales: '$23,356.25', stock: 'OUT OF STOCK'},
@@ -39,23 +48,25 @@ function Items() {
             <FixedHeaderSidebar />
             <div className="background">
                 <div className="main">
+                  <button className='procurement-page' onClick={() => nav('/procurement')}>
+                    <ProcurementButton />
+                  </button>
                     <div className="products-table">
+                    <div className="table-header-items">
+                      <div>Product Name</div>
+                      <div>Product ID</div>
+                      <div>Price</div>
+                      <div>Sales</div>
+                      <div>Stock</div>
+                    </div>
 
-          <div className="table-header-items">
-            <div>Product Name</div>
-            <div>Product ID</div>
-            <div>Price</div>
-            <div>Sales</div>
-            <div>Stock</div>
-          </div>
-
-          <div className="table-body-items">
-            {products.map((product, idx) => (
-              <div key={idx} className="table-row-items">
-                <div>{product.productName}</div>
-                <div>{product.productID}</div>
-                <div>{product.price}</div>
-                <div>{product.sales}</div>
+                  <div className="table-body-items">
+                    {products.map((product, idx) => (
+                    <div key={idx} className="table-row-items">
+                    <div>{product.productName}</div>
+                    <div>{product.productID}</div>
+                    <div>{product.price}</div>
+                    <div>{product.sales}</div>
                 <div>{getStockBadge(product.stock)}</div>
               </div>
             ))}
@@ -75,6 +86,7 @@ function Items() {
                 </div>
             </div>
         </div>
+        
     )
 }
 

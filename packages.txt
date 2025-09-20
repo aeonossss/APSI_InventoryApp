@@ -1,7 +1,6 @@
 react-scripts
 lucide-react
 react-router-dom
-framer-motion /*scrapped*/
 @supabase/supabase-js
 @supabase/auth-ui-react
 @supabase/auth-ui-shared

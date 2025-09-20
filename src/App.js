@@ -8,6 +8,8 @@ import Items from './Items.js';
 import StaffView from './Views Pages/StaffView.js';
 import TeamLeadView from './Views Pages/TeamLeadView.js';
 import CSRView from './Views Pages/CSRView.js';
+import WarehouseView from './Views Pages/WarehouseView.js';
+import AccountingView from './Views Pages/AccountingView.js';
 
 function App() {
   return (
@@ -21,7 +23,9 @@ function App() {
         <Route path='/items' element={<Items />} />
         <Route path='/staffview' element={<StaffView />} />
         <Route path='/teamleadview' element={<TeamLeadView />} />
-        <Route path='/csrview' element={<TeamLeadView />} />
+        <Route path='/csrview' element={<CSRView />} />
+        <Route path='/warehouseview' element={<WarehouseView />} />
+        <Route path='/accountingview' element={<AccountingView />} />
       </Routes>
     </BrowserRouter>
   );

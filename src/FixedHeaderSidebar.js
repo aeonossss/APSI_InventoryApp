@@ -6,6 +6,10 @@ function FixedHeaderSidebar() {
     const nav = useNavigate();
     const location = useLocation();
 
+    const userDetails = [
+      {user_id: 'Juan Dela Cruz', userName: '#12456', role_id: 'Accounting'}
+    ]
+
     const sidebarItems = [
     { name: 'Dashboard', icon: BarChart3, path: '/dashboard' },
     { name: 'Order', icon: ShoppingCart, path: '/orders' },
@@ -21,8 +25,13 @@ function FixedHeaderSidebar() {
             <User size={16} className="sidebar-text" />
           </div>
           <div className="user-details">
-            <div className="name">Juan Dela Cruz</div>
-            <div className="id">#03829</div>
+            {userDetails.map((user, idx) => (
+              <div key={idx}>
+                <p className="userName">{user.user_id}</p>
+                <p className="user_id">{user.userName}</p>
+                <p className="role_id" onClick ={() => nav('/staffview')}><i>{user.role_id}</i></p>
+                </div>
+            ))}
           </div>
         </div>
       </div>

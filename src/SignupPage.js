@@ -21,39 +21,32 @@ function SignupPage() {
     return Object.keys(formErrors).length === 0;
   };
 
-  // The handler for the form submission
+  // Signup handler
   const handleSignup = async (e) => {
     e.preventDefault();
-    
-    // Clear previous errors
     setErrors({});
-    
-    // Validate form before submission
-    if (!validateForm()) {
-      return;
-    }
+
+    if (!validateForm()) return;
 
     setIsLoading(true);
 
     try {
-      // Sign up the user with Supabase
       const { data, error } = await supabase.auth.signUp({
-        email: email,
-        password: password,
+        email,
+        password,
         options: {
           data: {
-            fullName: fullName,
+            full_name: fullName,
             role: role,
-          }
-        }
+          },
+        },
       });
 
       if (error) {
         console.error('Error signing up:', error.message);
         setErrors({ submit: error.message });
       } else {
-        console.log('User signed up: ', data);
-        // Only navigate to dashboard on successful signup
+        console.log('User signed up:', data);
         navigate('/dashboard');
       }
     } catch (error) {
@@ -82,7 +75,7 @@ function SignupPage() {
               <DropdownButton 
                 icon={ShieldUser} 
                 selectedOption={role} 
-                onSelectOption={setRole}
+                onSelectOption={setRole} // ✅ connects dropdown → state
                 error={errors.role}
               />
               
@@ -113,8 +106,6 @@ function SignupPage() {
               <p className='centered-text'>
                 <i>Already a member?</i> <Link to="/loginpage"><b>Login</b></Link>
               </p>
-              <br />
-              <br />
               
               <Button 
                 label={isLoading ? 'Signing Up...' : 'Sign Up'}
@@ -129,6 +120,7 @@ function SignupPage() {
   );
 }
 
+// 🔘 Button component
 function Button({ label, type = "button", disabled = false, onClick }) {
   return (
     <button
@@ -142,6 +134,7 @@ function Button({ label, type = "button", disabled = false, onClick }) {
   );
 }
 
+// 🔘 Textbox component
 function Textbox({ placeholder, icon: Icon, value, onChange, error, type = "text" }) {
   return (
     <div className='textbox-wrapper'>
@@ -166,6 +159,7 @@ function Textbox({ placeholder, icon: Icon, value, onChange, error, type = "text
   );
 }
 
+// 🔘 Password component
 function Password({ placeholder, icon: Icon, value, onChange, error }) {
   return (
     <div className='textbox-wrapper'>
@@ -190,18 +184,19 @@ function Password({ placeholder, icon: Icon, value, onChange, error }) {
   );
 }
 
+// 🔘 DropdownButton component
 const DropdownButton = ({ icon: Icon, selectedOption, onSelectOption, error }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const options = [
-    'CSR',
-    'Team Lead', 
-    'Accounting',
-    'Warehouse Staff',
+    { label: 'CSR', value: 'csr' },
+    { label: 'Team Lead', value: 'team-lead' },
+    { label: 'Accounting', value: 'accounting' },
+    { label: 'Warehouse Staff', value: 'warehouse' },
   ];
 
   const handleOptionClick = (option) => {
-    onSelectOption(option);
+    onSelectOption(option.value);
     setIsOpen(false);
   };
 
@@ -214,20 +209,19 @@ const DropdownButton = ({ icon: Icon, selectedOption, onSelectOption, error }) =
           onClick={() => setIsOpen(!isOpen)}
         >
           {Icon && <Icon size={16} className="textbox-icon" />}
-          <span>{selectedOption || 'Role'}</span>
+          <span>{options.find(opt => opt.value === selectedOption)?.label || 'Role'}</span>
           <ChevronDown size={20} className={`chevron ${isOpen ? 'rotate' : ''}`} />
         </button>
 
         {isOpen && (
           <div className="dropdown-menu">
-            {options.map((option, index) => (
+            {options.map((option) => (
               <button
-                key={index}
+                key={option.value}
                 type="button"
                 className="dropdown-item"
-                onClick={() => handleOptionClick(option)}
-              >
-                {option}
+                onClick={() => handleOptionClick(option)}>
+                {option.label}
               </button>
             ))}
           </div>

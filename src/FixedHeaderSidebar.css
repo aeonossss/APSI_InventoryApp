@@ -49,16 +49,25 @@
   text-align: right;
 }
 
-.user-details .name {
+.user-details .userName {
   font-weight: 500;
   color: #ffffff;
   margin: 0;
 }
 
-.user-details .id {
+.user-details .user_id {
   color: rgba(255, 255, 255, 0.7);
   font-size: 0.75rem;
   margin: 0;
+}
+
+.user-details .role_id{
+  margin: 0;
+  cursor: pointer;
+}
+
+.user-details .role_id:hover{
+  color:#AE6499
 }
 
 /* SIDEBAR */

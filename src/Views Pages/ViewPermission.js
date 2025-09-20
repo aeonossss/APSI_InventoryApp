@@ -1,27 +1,54 @@
-import { useNavigate } from "react-router-dom";
-import './App.js';
+import { useNavigate, useLocation } from "react-router-dom";
+import './StaffView.css';
 
-function ViewPermission(){
-    const nav = useNavigate();
-    const perms = (permitted) => {
-        if (!permitted) {
-            alert("You don't have permission to access this page.");
-            nav('./dashboard');
-        }
-    }
+function ViewPermission() {
+  const nav = useNavigate();
+  const location = useLocation();
 
-    const permsRead = (role) =>{
-        if (role == 'team lead') {
-            nav('./TeamLeadView');
-        }
-        else if (role == 'csr'){
-            nav('/CSRView')
-        }
-        else if (role == 'warehousestaff'){
-            nav('./WarehouseStaff')
-        }
+  //edit role here:
+  const userRole = 'accounting';
+  const top_tab_staffs = ['Team Lead', 'CSR', 'Warehouse', 'Accounting'];
+
+  //map tab names to routes
+  const roleRoutes = {
+    'Team Lead': '/TeamLeadView',
+    'CSR': '/CSRView',
+    'Warehouse': '/WarehouseView',
+    'Accounting': '/AccountingView'
+  };
+
+  const perms = (userRole, permittedRole, targetPath) => {
+    if (userRole === permittedRole) {
+      nav(targetPath);
+    } else {
+      alert("You don't have permission to access this page.");
     }
-    return(
-        <h1>test</h1>
-    );
+  };
+
+  const permsRead = (role, tabName) => {
+    const targetPath = roleRoutes[tabName];
+    perms(userRole, role, targetPath);
+  };
+
+  return (
+    <div className='view-permission'>
+      <div className='top_tab_staffs'>
+        {top_tab_staffs.map((tab) => {
+          const roleKey = tab.toLowerCase().replace(' ', '-');
+          const isActive = location.pathname === roleRoutes[tab];
+
+          return (
+            <button
+              key={tab}
+              onClick={() => permsRead(roleKey, tab)}
+              className={isActive ? 'tab active' : 'tab'}>
+              {tab}
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
+
+export default ViewPermission;

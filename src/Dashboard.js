@@ -2,13 +2,12 @@ import { useState } from 'react';
 import './Dashboard.css';
 import './App'
 
-import { useNavigate, useLocation } from 'react-router-dom';
-import { BarChart3, ShoppingCart, Package, Users, LogOut, User } from 'lucide-react';
+import { useNavigate} from 'react-router-dom';
+import { User } from 'lucide-react';
 import FixedHeaderSidebar from './FixedHeaderSidebar';
 
 const Dashboard = () => {
   const nav = useNavigate();
-  const location = useLocation();
   const [activeTab, setActiveTab] = useState('Warehouse');
   
 

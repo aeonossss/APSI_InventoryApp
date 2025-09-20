@@ -3,7 +3,7 @@ import '../Items.css';
 import FixedHeaderSidebar from '../FixedHeaderSidebar.js';
 import ViewPermission from './ViewPermission.js';
 
-function TeamLeadView() {
+function WarehouseView() {
     const products = [
         {productName: 'Sodapop Candy Case', productID: '#01234', price: '$79.25', sales: '$23,356.25', stock: 'OUT OF STOCK'},
         {productName: 'Amber Vein Case', productID: '#01234', price: '$79.25', sales: '$23,356.25', stock: 'OUT OF STOCK'},
@@ -78,4 +78,4 @@ function TeamLeadView() {
     )
 }
 
-export default TeamLeadView;
+export default WarehouseView;
